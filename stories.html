@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Истории студентов - ФИТ</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        /* ОБЯЗАТЕЛЬНЫЕ СТИЛИ ДЛЯ МЕНЮ */
+        .main-nav {
+            background: #2c3e50 !important;
+            padding: 1rem 0 !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            width: 100% !important;
+            display: block !important;
+        }
+
+        .main-nav ul {
+            list-style: none !important;
+            display: flex !important;
+            justify-content: center !important;
+            gap: 2rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .main-nav li {
+            display: block !important;
+        }
+
+        .main-nav a {
+            text-decoration: none !important;
+            color: #ecf0f1 !important;
+            font-weight: 500 !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 5px !important;
+            transition: all 0.3s ease !important;
+            display: block !important;
+        }
+
+        .main-nav a:hover {
+            background: #3498db !important;
+            color: white !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .main-nav a.active {
+            background: #e74c3c !important;
+            color: white !important;
+        }
+
+        header {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        nav {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .stories-container {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .story-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .story-item.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .story-item:hover {
+            border-left-color: #e74c3c;
+            transform: translateX(10px) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .story-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .story-badge {
+            background: #3498db;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .stories-filter {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 0.5rem;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+            background: white;
+        }
+        
+        .no-stories {
+            text-align: center;
+            padding: 3rem;
+            color: #7f8c8d;
+            display: none;
+        }
+    </style>
+</head>
+<body data-page="stories">
+    <header id="main-header">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О факультете</a></li>
+                <li><a href="stories.html" class="active">Истории студентов</a></li>
+                <li><a href="add-story.html">Добавить историю</a></li>
+                <li><a href="contact.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Истории наших студентов</h1>
+            <p>Реальные истории успеха и достижений</p>
+        </div>
+
+        <section class="stories-filter">
+            <div class="filter-group">
+                <label for="filterCourse">Фильтр по курсу:</label>
+                <select id="filterCourse" class="filter-select">
+                    <option value="all">Все курсы</option>
+                    <option value="1">1 курс</option>
+                    <option value="2">2 курс</option>
+                    <option value="3">3 курс</option>
+                    <option value="4">4 курс</option>
+                    <option value="graduate">Выпускники</option>
+                </select>
+                
+                <label for="filterDepartment">Фильтр по кафедре:</label>
+                <select id="filterDepartment" class="filter-select">
+                    <option value="all">Все кафедры</option>
+                    <option value="software">Программная инженерия</option>
+                    <option value="ai">Искусственный интеллект</option>
+                    <option value="security">Кибербезопасность</option>
+                </select>
+                
+                <button id="resetFilters" class="btn" style="padding: 0.5rem 1rem;">Сбросить фильтры</button>
+            </div>
+        </section>
+
+        <section class="stories-container" id="storiesContainer">
+            <article class="story-item" data-course="3" data-department="software">
+                <div class="story-meta">
+                    <strong>Мария Иванова</strong>
+                    <span class="story-badge">3 курс</span>
+                    <span class="story-badge" style="background: #27ae60;">Программная инженерия</span>
+                </div>
+                <h3>Мой путь в IT: от новичка до стажера в крупной компании</h3>
+                <p>Когда я поступила на факультет, я почти не имела представления о программировании. Благодаря поддержке преподавателей и практическим занятиям, я смогла не только освоить основы, но и получить стажировку в одной из ведущих IT-компаний страны. Особенно полезными оказались курсы по алгоритмам и структурам данных, которые дали прочную основу для решения сложных задач.</p>
+                <div class="story-meta">
+                    <small>Опубликовано: 15.12.2024</small>
+                </div>
+            </article>
+
+            <article class="story-item" data-course="4" data-department="ai">
+                <div class="story-meta">
+                    <strong>Алексей Петров</strong>
+                    <span class="story-badge">4 курс</span>
+                    <span class="story-badge" style="background: #8e44ad;">Искусственный интеллект</span>
+                </div>
+                <h3>Победа в международном хакатоне по машинному обучению</h3>
+                <p>Участие в хакатоне Machine Learning Challenge стало поворотным моментом в моей карьере. Наша команда разработала алгоритм для прогнозирования рыночных тенденций, который занял первое место среди 200 участников. Знания, полученные на курсах "Нейронные сети" и "Обработка больших данных", оказались неоценимыми для этого успеха.</p>
+                <div class="story-meta">
+                    <small>Опубликовано: 10.12.2024</small>
+                </div>
+            </article>
+
+            <article class="story-item" data-course="graduate" data-department="security">
+                <div class="story-meta">
+                    <strong>Екатерина Смирнова</strong>
+                    <span class="story-badge" style="background: #e74c3c;">Выпуск 2022</span>
+                    <span class="story-badge" style="background: #d35400;">Кибербезопасность</span>
+                </div>
+                <h3>Как студенческие проекты помогли построить карьеру в безопасности</h3>
+                <p>Проекты, которые мы выполняли во время учебы, стали отличным портфолио для моего резюме. Сейчас я работаю специалистом по кибербезопасности в финансовом секторе и благодарна факультету за практическую направленность обучения. Курс "Криптография и защита информации" особенно помог в понимании современных угроз и методов защиты.</p>
+                <div class="story-meta">
+                    <small>Опубликовано: 05.12.2024</small>
+                </div>
+            </article>
+        </section>
+
+        <div class="no-stories" id="noStoriesMessage">
+            <h3>Истории не найдены</h3>
+            <p>Попробуйте изменить параметры фильтра или станьте первым, кто поделится своей историей!</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Факультет Информационных Технологий</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация фильтров
+            initFilters();
+            
+            // Инициализация анимации
+            initAnimation();
+            
+            // Загружаем сохраненные истории
+            loadStories();
+        });
+
+        function loadStories() {
+            const stories = JSON.parse(localStorage.getItem('studentStories')) || [];
+            const container = document.getElementById('storiesContainer');
+            
+            if (!container) return;
+            
+            // Удаляем старые сохраненные истории
+            const oldStories = container.querySelectorAll('.story-item[data-saved="true"]');
+            oldStories.forEach(story => story.remove());
+            
+            // Добавляем сохраненные истории
+            stories.forEach((story, index) => {
+                const storyElement = createStoryElement(story);
+                container.insertBefore(storyElement, container.firstChild);
+                
+                setTimeout(() => {
+                    storyElement.style.opacity = '1';
+                    storyElement.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        function createStoryElement(story) {
+            const article = document.createElement('article');
+            article.className = 'story-item';
+            article.setAttribute('data-course', story.course);
+            article.setAttribute('data-department', story.department);
+            article.setAttribute('data-saved', 'true');
+            
+            const departmentColors = {
+                'software': '#27ae60',
+                'ai': '#8e44ad', 
+                'security': '#d35400'
+            };
+            
+            const departmentNames = {
+                'software': 'Программная инженерия',
+                'ai': 'Искусственный интеллект',
+                'security': 'Кибербезопасность'
+            };
+            
+            const courseNames = {
+                '1': '1 курс',
+                '2': '2 курс', 
+                '3': '3 курс',
+                '4': '4 курс',
+                'graduate': 'Выпускник'
+            };
+
+            article.innerHTML = `
+                <div class="story-meta">
+                    <strong>${escapeHtml(story.name)}</strong>
+                    <span class="story-badge">${courseNames[story.course]}</span>
+                    <span class="story-badge" style="background: ${departmentColors[story.department]};">
+                        ${departmentNames[story.department]}
+                    </span>
+                </div>
+                <h3>${escapeHtml(story.title)}</h3>
+                <p>${escapeHtml(story.text)}</p>
+                <div class="story-meta">
+                    <small>Опубликовано: ${story.date}</small>
+                    ${story.email ? `<small>Email: ${escapeHtml(story.email)}</small>` : ''}
+                </div>
+            `;
+            
+            article.style.opacity = '0';
+            article.style.transform = 'translateY(20px)';
+            article.style.transition = 'all 0.6s ease';
+            
+            return article;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function initFilters() {
+            const filterCourse = document.getElementById('filterCourse');
+            const filterDepartment = document.getElementById('filterDepartment');
+            const resetBtn = document.getElementById('resetFilters');
+            const noStoriesMsg = document.getElementById('noStoriesMessage');
+
+            if (filterCourse && filterDepartment) {
+                filterCourse.addEventListener('change', applyFilters);
+                filterDepartment.addEventListener('change', applyFilters);
+                
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        filterCourse.value = 'all';
+                        filterDepartment.value = 'all';
+                        applyFilters();
+                    });
+                }
+            }
+
+            function applyFilters() {
+                const courseValue = filterCourse.value;
+                const departmentValue = filterDepartment.value;
+                const stories = document.querySelectorAll('.story-item');
+                let visibleCount = 0;
+
+                stories.forEach(story => {
+                    const storyCourse = story.getAttribute('data-course');
+                    const storyDept = story.getAttribute('data-department');
+
+                    const courseMatch = courseValue === 'all' || storyCourse === courseValue;
+                    const deptMatch = departmentValue === 'all' || storyDept === departmentValue;
+
+                    if (courseMatch && deptMatch) {
+                        story.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        story.style.display = 'none';
+                    }
+                });
+
+                if (noStoriesMsg) {
+                    noStoriesMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+                }
+            }
+
+            applyFilters();
+        }
+
+        function initAnimation() {
+            const stories = document.querySelectorAll('.story-item:not([data-saved="true"])');
+            stories.forEach((story, index) => {
+                setTimeout(() => {
+                    story.style.opacity = '1';
+                    story.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        }
+    </script>
+</body>
+</html>

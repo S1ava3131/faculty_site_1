@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты - ФИТ</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        /* ОБЯЗАТЕЛЬНЫЕ СТИЛИ ДЛЯ МЕНЮ */
+        .main-nav {
+            background: #2c3e50 !important;
+            padding: 1rem 0 !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            width: 100% !important;
+            display: block !important;
+        }
+
+        .main-nav ul {
+            list-style: none !important;
+            display: flex !important;
+            justify-content: center !important;
+            gap: 2rem !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .main-nav li {
+            display: block !important;
+        }
+
+        .main-nav a {
+            text-decoration: none !important;
+            color: #ecf0f1 !important;
+            font-weight: 500 !important;
+            padding: 0.5rem 1rem !important;
+            border-radius: 5px !important;
+            transition: all 0.3s ease !important;
+            display: block !important;
+        }
+
+        .main-nav a:hover {
+            background: #3498db !important;
+            color: white !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .main-nav a.active {
+            background: #e74c3c !important;
+            color: white !important;
+        }
+
+        header {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        nav {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .contact-item {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .contact-item::before {
+            content: '📍';
+            position: absolute;
+            left: 0;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .map-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 300px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .social-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Псевдоклассы для contact.html */
+        .contact-item:nth-child(2n) {
+            background: #f8f9fa;
+            margin-left: -2rem;
+            margin-right: -2rem;
+            padding-left: 3rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .social-link:first-child {
+            background: #667eea;
+        }
+
+        .social-link:last-child {
+            background: #e74c3c;
+        }
+
+        /* ID селекторы */
+        #contactMap {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #contactForm {
+            position: relative;
+        }
+    </style>
+</head>
+<body data-page="contact">
+    <header id="main-header">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О факультете</a></li>
+                <li><a href="stories.html">Истории студентов</a></li>
+                <li><a href="add-story.html">Добавить историю</a></li>
+                <li><a href="contact.html" class="active">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Свяжитесь с нами</h1>
+            <p>Мы всегда рады ответить на ваши вопросы</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Контактная информация</h2>
+                
+                <div class="contact-item">
+                    <h3>Адрес</h3>
+                    <p>г. Белгород, ул. Студенческая, д. 15<br>Корпус ФИТ, 3 этаж</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Телефоны</h3>
+                    <p>Приемная комиссия: +7 (4722) 123-45-67<br>Деканат: +7 (4722) 123-45-68</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <p>fit@university.ru<br>admission@university.ru</p>
+                </div>
+                
+                <div class="contact-item">
+                    <h3>График работы</h3>
+                    <p>Пн-Пт: 9:00 - 18:00<br>Сб: 10:00 - 15:00<br>Вс: выходной</p>
+                </div>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">VK</a>
+                    <a href="#" class="social-link">Telegram</a>
+                    <a href="#" class="social-link">YouTube</a>
+                </div>
+            </div>
+            
+            <div id="contactForm" class="contact-form">
+                <h2>Форма обратной связи</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="contactName" class="form-label">Ваше имя *</label>
+                        <input type="text" id="contactName" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactEmail" class="form-label">Email *</label>
+                        <input type="email" id="contactEmail" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactSubject" class="form-label">Тема сообщения</label>
+                        <select id="contactSubject" class="form-control">
+                            <option value="">Выберите тему</option>
+                            <option value="admission">Поступление</option>
+                            <option value="education">Обучение</option>
+                            <option value="partnership">Сотрудничество</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactMessage" class="form-label">Сообщение *</label>
+                        <textarea id="contactMessage" class="form-control" rows="5" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Отправить сообщение</button>
+                </form>
+            </div>
+        </div>
+        
+        <div id="contactMap" class="map-placeholder">
+            🗺️ Здесь будет карта с расположением факультета в Белгороде
+        </div>
+    </main>
+
+    <footer id="page-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Факультет Информационных Технологий. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О факультете - ФИТ</title>
+    <link rel="stylesheet" href="common.css">
+    <style>
+        .departments {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .department {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .department:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+            display: block;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .mission-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        /* Псевдоклассы для about.html */
+        .department:nth-child(2n) {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+        }
+
+        .stat-item:first-child .stat-number {
+            color: #3498db;
+        }
+
+        .stat-item:last-child .stat-number {
+            color: #2ecc71;
+        }
+
+        /* ID селекторы */
+        #missionStatement {
+            font-style: italic;
+            border-left: 4px solid #3498db;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body data-page="about">
+    <header id="main-header">
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html" class="active">О факультете</a></li>
+                <li><a href="stories.html">Истории студентов</a></li>
+                <li><a href="add-story.html">Добавить историю</a></li>
+                <li><a href="contact.html">Контакты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <div class="page-header">
+            <h1>О нашем факультете</h1>
+            <p>Современное образование для будущих IT-лидеров</p>
+        </div>
+
+        <section class="mission-section">
+            <h2>Наша миссия</h2>
+            <p id="missionStatement">Факультет Информационных Технологий готовит высококвалифицированных специалистов, способных решать сложные задачи в области информационных технологий и digital-инноваций.</p>
+        </section>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">10+</span>
+                <span class="stat-label">лет опыта</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">1500+</span>
+                <span class="stat-label">выпускников</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">95%</span>
+                <span class="stat-label">трудоустройство</span>
+            </div>
+        </div>
+
+        <section class="card">
+            <h2>Кафедры факультета</h2>
+            <div class="departments">
+                <div class="department">
+                    <h3>Программная инженерия</h3>
+                    <p>Разработка сложных программных систем и приложений</p>
+                </div>
+                <div class="department">
+                    <h3>Искусственный интеллект</h3>
+                    <p>Машинное обучение и анализ данных</p>
+                </div>
+                <div class="department">
+                    <h3>Кибербезопасность</h3>
+                    <p>Защита информации и сетевые технологии</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="page-footer">
+        <div class="footer-content">
+            <p>Факультет Информационных Технологий</p>
+        </div>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
