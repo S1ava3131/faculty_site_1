@@ -40,16 +40,22 @@
             font-family: inherit;
         }
         
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-        
         .form-control:focus {
             outline: none;
             border-color: #3498db;
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .form-control.error {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
         }
         
         .btn {
@@ -67,17 +73,43 @@
         .btn:hover {
             background: #2980b9;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
         }
         
-        .required {
-            color: #e74c3c;
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
         
-        .form-note {
-            text-align: center;
+        .success-message {
+            background: #2ecc71;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
             margin-top: 1rem;
-            color: #666;
-            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .char-counter {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-left: auto;
+        }
+        
+        .char-counter.warning {
+            color: #e67e22;
+        }
+        
+        .char-counter.error {
+            color: #e74c3c;
         }
         
         .back-link {
@@ -108,82 +140,74 @@
     <main class="main-content">
         <div class="add-story-container">
             <div class="page-header">
-                <h1>Добавление истории студента</h1>
-                <p>Расскажите о достижениях и опыте студента факультета</p>
+                <h1>Добавить историю студента</h1>
+                <p>Поделитесь своим опытом и достижениями</p>
             </div>
 
             <section class="form-section">
-                <form id="studentForm">
-                    <!-- Первая строка: ФИО и Группа -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="studentName" class="form-label">ФИО студента <span class="required">*</span></label>
-                            <input type="text" id="studentName" class="form-control" required placeholder="Иванов Иван Иванович">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="studentGroup" class="form-label">Группа <span class="required">*</span></label>
-                            <input type="text" id="studentGroup" class="form-control" required placeholder="ИТ-21-1">
-                        </div>
+                <form id="storyForm" class="story-form">
+                    <div class="form-group">
+                        <label for="studentName" class="form-label">ФИО студента *</label>
+                        <input type="text" id="studentName" class="form-control" required maxlength="100">
+                        <div class="error-message" id="nameError">Пожалуйста, введите ваше ФИО</div>
                     </div>
 
-                    <!-- Вторая строка: Факультет и Курс -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="studentFaculty" class="form-label">Факультет <span class="required">*</span></label>
-                            <select id="studentFaculty" class="form-control" required>
-                                <option value="">Выберите факультет</option>
+                    <div class="form-group">
+                        <label for="studentCourse" class="form-label">Курс *</label>
+                        <select id="studentCourse" class="form-control" required>
+                            <option value="">Выберите курс</option>
+                            <option value="1">1 курс</option>
+                            <option value="2">2 курс</option>
+                            <option value="3">3 курс</option>
+                            <option value="4">4 курс</option>
+                            <option value="graduate">Выпускник</option>
+                        </select>
+                        <div class="error-message" id="courseError">Пожалуйста, выберите курс</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentDepartment" class="form-label">Кафедра *</label>
+                        <select id="studentDepartment" class="form-control" required>
+                            <option value="">Выберите кафедру</option>
                             <option value="software">Программная инженерия</option>
                             <option value="ai">Искусственный интеллект</option>
                             <option value="security">Кибербезопасность</option>
-                            </select>
+                        </select>
+                        <div class="error-message" id="departmentError">Пожалуйста, выберите кафедру</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="storyTitle" class="form-label">Заголовок истории *</label>
+                        <input type="text" id="storyTitle" class="form-control" required maxlength="200">
+                        <div class="error-message" id="titleError">Пожалуйста, введите заголовок истории</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="storyText" class="form-label">Текст истории *</label>
+                        <textarea id="storyText" class="form-control" rows="6" required 
+                                  placeholder="Расскажите вашу историю успеха, достижений или интересный опыт..."
+                                  maxlength="2000"></textarea>
+                        <div class="char-counter" id="textCounter">Осталось символов: 2000</div>
+                        <div class="error-message" id="textError">Пожалуйста, напишите вашу историю</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentEmail" class="form-label">Email для связи</label>
+                        <input type="email" id="studentEmail" class="form-control" placeholder="your.email@example.com">
+                        <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn" id="submitBtn">Отправить историю</button>
+                        <button type="reset" class="btn" style="background: #95a5a6;">Очистить форму</button>
+                        <div class="char-counter">
+                            * - обязательные поля
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="studentCourse" class="form-label">Курс <span class="required">*</span></label>
-                            <select id="studentCourse" class="form-control" required>
-                                <option value="">Выберите курс</option>
-                                <option value="1">1 курс</option>
-                                <option value="2">2 курс</option>
-                                <option value="3">3 курс</option>
-                                <option value="4">4 курс</option>
-                                <option value="graduate">Выпускник</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Учебные проекты -->
-                    <div class="form-group">
-                        <label for="studentProjects" class="form-label">Учебные проекты <span class="required">*</span></label>
-                        <textarea id="studentProjects" class="form-control" rows="4" required placeholder="Опишите основные учебные проекты студента..."></textarea>
-                    </div>
-
-                    <!-- Практический опыт -->
-                    <div class="form-group">
-                        <label for="studentExperience" class="form-label">Практический опыт</label>
-                        <textarea id="studentExperience" class="form-control" rows="3" placeholder="Стажировки, работа, волонтерство..."></textarea>
-                    </div>
-
-                    <!-- Ключевые навыки -->
-                    <div class="form-group">
-                        <label for="studentSkills" class="form-label">Ключевые навыки <span class="required">*</span></label>
-                        <input type="text" id="studentSkills" class="form-control" required placeholder="Java, Python, SQL, React, Git...">
-                    </div>
-
-                    <!-- Планы на будущее -->
-                    <div class="form-group">
-                        <label for="studentFuture" class="form-label">Планы на будущее</label>
-                        <textarea id="studentFuture" class="form-control" rows="3" placeholder="Карьерные цели, дальнейшее обучение..."></textarea>
-                    </div>
-
-                    <!-- Кнопка отправки -->
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn">✅ Добавить историю студента</button>
                     </div>
                     
-                    <p class="form-note">
-                        <span class="required">*</span> - обязательные для заполнения поля
-                    </p>
+                    <div class="success-message" id="successMessage">
+                        ✅ Ваша история успешно отправлена! После проверки она будет опубликована.
+                    </div>
                 </form>
 
                 <a href="stories.html" class="back-link">← Вернуться к историям студентов</a>
@@ -199,7 +223,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('studentForm');
+            const form = document.getElementById('storyForm');
+            const textarea = document.getElementById('storyText');
+            const counter = document.getElementById('textCounter');
+            const successMsg = document.getElementById('successMessage');
+
+            // Счетчик символов
+            if (textarea && counter) {
+                textarea.addEventListener('input', function() {
+                    const remaining = 2000 - this.value.length;
+                    counter.textContent = `Осталось символов: ${remaining}`;
+                    
+                    if (remaining < 100) {
+                        counter.className = 'char-counter warning';
+                    } else if (remaining < 0) {
+                        counter.className = 'char-counter error';
+                    } else {
+                        counter.className = 'char-counter';
+                    }
+                });
+            }
 
             // Обработка отправки формы
             if (form) {
@@ -209,41 +252,54 @@
                     // Собираем данные формы
                     const formData = {
                         name: document.getElementById('studentName').value.trim(),
-                        group: document.getElementById('studentGroup').value.trim(),
-                        faculty: document.getElementById('studentFaculty').value,
                         course: document.getElementById('studentCourse').value,
-                        projects: document.getElementById('studentProjects').value.trim(),
-                        experience: document.getElementById('studentExperience').value.trim(),
-                        skills: document.getElementById('studentSkills').value.trim(),
-                        future: document.getElementById('studentFuture').value.trim()
+                        department: document.getElementById('studentDepartment').value,
+                        title: document.getElementById('storyTitle').value.trim(),
+                        text: document.getElementById('storyText').value.trim(),
+                        email: document.getElementById('studentEmail').value.trim()
                     };
                     
                     // Проверяем обязательные поля
-                    if (!formData.name || !formData.group || !formData.faculty || !formData.course || !formData.projects || !formData.skills) {
+                    if (!formData.name || !formData.course || !formData.department || !formData.title || !formData.text) {
                         alert('Пожалуйста, заполните все обязательные поля!');
                         return;
                     }
                     
                     // Сохраняем историю в localStorage
-                    saveStudentStory(formData);
+                    saveStory(formData);
                     
-                    alert('✅ История студента успешно добавлена!');
+                    // Показываем сообщение об успехе
+                    if (successMsg) {
+                        successMsg.style.display = 'block';
+                    }
                     
                     // Сбрасываем форму
                     this.reset();
+                    
+                    // Сбрасываем счетчик
+                    if (counter) {
+                        counter.textContent = 'Осталось символов: 2000';
+                        counter.className = 'char-counter';
+                    }
+                    
+                    // Скрываем сообщение через 5 секунд
+                    setTimeout(() => {
+                        if (successMsg) {
+                            successMsg.style.display = 'none';
+                        }
+                    }, 5000);
                 });
             }
 
-            function saveStudentStory(studentData) {
+            function saveStory(storyData) {
                 let stories = JSON.parse(localStorage.getItem('studentStories')) || [];
-                studentData.id = Date.now();
-                studentData.date = new Date().toLocaleDateString('ru-RU');
-                stories.unshift(studentData);
+                storyData.id = Date.now();
+                storyData.date = new Date().toLocaleDateString('ru-RU');
+                stories.unshift(storyData);
                 localStorage.setItem('studentStories', JSON.stringify(stories));
-                console.log('История студента сохранена:', studentData);
+                console.log('История сохранена:', storyData);
             }
         });
     </script>
 </body>
-
 </html>
